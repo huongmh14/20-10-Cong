@@ -834,15 +834,6 @@
             <p id="wish-closing" class="wish-closing"></p>
           </div>
         </div>
-
-        <div class="wish-actions">
-          <button type="button" id="celebrate-btn" class="btn-sparkle">
-            <span>🎆 Tung hoa chúc mừng</span>
-          </button>
-          <button type="button" id="reset-btn" class="btn-secondary">
-            <span>🔄 Nhập tên khác</span>
-          </button>
-        </div>
       </section>
     </div>
 
@@ -922,13 +913,15 @@
       let cw = window.innerWidth || 375;
       let ch = window.innerHeight || 667;
       const petals = [];
+      const rockets = [];
       const particles = [];
+      let autoFireworkTimer = null;
 
       const PETAL_COLORS = [
-        'rgba(114, 186, 247, 0.62)',
-        'rgba(166, 216, 252, 0.72)',
-        'rgba(66, 153, 225, 0.52)',
-        'rgba(225, 243, 254, 0.85)'
+        'rgba(114, 186, 247, 0.68)',
+        'rgba(166, 216, 252, 0.78)',
+        'rgba(66, 153, 225, 0.58)',
+        'rgba(225, 243, 254, 0.88)'
       ];
 
       const BURST_COLORS = [
@@ -937,6 +930,8 @@
         '#63b3ed',
         '#90cdf4',
         '#f6e05e',
+        '#ffd166',
+        '#ff8fab',
         '#ffffff'
       ];
 
@@ -956,59 +951,93 @@
           y: randomY ? Math.random() * ch : -20 - Math.random() * 40,
           w: 7 + Math.random() * 6,
           h: 4.5 + Math.random() * 4,
-          vy: 0.55 + Math.random() * 0.95,
-          vx: -0.3 + Math.random() * 0.6,
+          vy: 0.65 + Math.random() * 1.1,
+          vx: -0.35 + Math.random() * 0.7,
           angle: Math.random() * Math.PI * 2,
-          spin: (Math.random() - 0.5) * 0.02,
+          spin: (Math.random() - 0.5) * 0.025,
           sway: Math.random() * Math.PI * 2,
           swaySpeed: 0.015 + Math.random() * 0.015,
-          color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)]
+          color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)],
+          isFullFlower: Math.random() < 0.28
         };
       }
 
       function initPetals() {
         petals.length = 0;
         if (prefersReducedMotion || !ctx) return;
-        const total = cw < 640 ? 16 : 26;
+        const total = cw < 640 ? 22 : 34;
         for (let i = 0; i < total; i++) {
           petals.push(createPetal(true));
         }
       }
 
-      function spawnFlowerBurst(x, y, count = 26) {
+      function spawnFlowerBurst(x, y, count = 32) {
         if (prefersReducedMotion || !ctx) return;
         for (let i = 0; i < count; i++) {
-          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.25;
-          const speed = 1.4 + Math.random() * 4.2;
+          const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.22;
+          const speed = 1.6 + Math.random() * 4.8;
           particles.push({
             x,
             y,
             vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed - 0.7,
-            size: 3 + Math.random() * 3.5,
+            vy: Math.sin(angle) * speed - 0.8,
+            size: 3.2 + Math.random() * 3.8,
             color: BURST_COLORS[i % BURST_COLORS.length],
             alpha: 1,
-            decay: 0.014 + Math.random() * 0.012,
+            decay: 0.012 + Math.random() * 0.012,
             isFlower: i % 3 === 0,
             rotation: Math.random() * Math.PI * 2
           });
         }
       }
 
+      // Bắn quả pháo hoa từ dưới lên và nổ tung thành hoa + sao sáng
+      function launchFireworkRocket(targetX, targetY) {
+        if (prefersReducedMotion || !ctx) return;
+        const startX = targetX ?? cw * (0.15 + Math.random() * 0.7);
+        const endX = startX + (Math.random() - 0.5) * 60;
+        const endY = targetY ?? ch * (0.14 + Math.random() * 0.34);
+        rockets.push({
+          x: startX,
+          y: ch + 10,
+          targetX: endX,
+          targetY: endY,
+          vx: (endX - startX) / 38,
+          vy: -(7.5 + Math.random() * 3.5),
+          color: BURST_COLORS[Math.floor(Math.random() * BURST_COLORS.length)],
+          trail: []
+        });
+      }
+
+      // Tung hoa từ hai bên & giữa màn hình kết hợp pháo hoa
       function launchCelebrationBouquet() {
         if (prefersReducedMotion || !ctx) return;
         const positions = [
-          [cw * 0.22, ch * 0.28],
-          [cw * 0.78, ch * 0.28],
+          [cw * 0.2, ch * 0.26],
+          [cw * 0.8, ch * 0.26],
           [cw * 0.5, ch * 0.18],
-          [cw * 0.34, ch * 0.42],
-          [cw * 0.66, ch * 0.42]
+          [cw * 0.32, ch * 0.38],
+          [cw * 0.68, ch * 0.38]
         ];
         positions.forEach(([px, py], idx) => {
           setTimeout(() => {
-            spawnFlowerBurst(px, py, cw < 640 ? 22 : 30);
-          }, idx * 180);
+            spawnFlowerBurst(px, py, cw < 640 ? 26 : 36);
+          }, idx * 170);
         });
+        setTimeout(() => launchFireworkRocket(cw * 0.25, ch * 0.22), 250);
+        setTimeout(() => launchFireworkRocket(cw * 0.75, ch * 0.24), 550);
+      }
+
+      function startContinuousCelebration() {
+        if (prefersReducedMotion || !ctx) return;
+        if (autoFireworkTimer) clearInterval(autoFireworkTimer);
+        autoFireworkTimer = setInterval(() => {
+          if (document.hidden) return;
+          launchFireworkRocket();
+          if (Math.random() < 0.65) {
+            setTimeout(() => launchFireworkRocket(), 420);
+          }
+        }, 1800);
       }
 
       function drawMiniFlower(context, x, y, r, rot) {
@@ -1032,10 +1061,11 @@
         if (!ctx) return;
         ctx.clearRect(0, 0, cw, ch);
 
+        // Vẽ cánh hoa & bông hoa rơi
         for (let i = 0; i < petals.length; i++) {
           const p = petals[i];
           p.sway += p.swaySpeed;
-          p.x += p.vx + Math.sin(p.sway) * 0.55;
+          p.x += p.vx + Math.sin(p.sway) * 0.65;
           p.y += p.vy;
           p.angle += p.spin;
 
@@ -1047,22 +1077,55 @@
           if (p.x < -24) p.x = cw + 20;
 
           ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.angle);
           ctx.fillStyle = p.color;
-          ctx.beginPath();
-          ctx.ellipse(0, 0, p.w, p.h, 0, 0, Math.PI * 2);
-          ctx.fill();
+          if (p.isFullFlower) {
+            drawMiniFlower(ctx, p.x, p.y, p.w * 0.55, p.angle);
+          } else {
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, p.w, p.h, 0, 0, Math.PI * 2);
+            ctx.fill();
+          }
           ctx.restore();
         }
 
+        // Vẽ tên lửa pháo hoa bay lên
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          const rk = rockets[i];
+          rk.trail.push({ x: rk.x, y: rk.y });
+          if (rk.trail.length > 8) rk.trail.shift();
+
+          rk.x += rk.vx;
+          rk.y += rk.vy;
+          rk.vy *= 0.985;
+
+          // Vẽ đuôi sáng pháo hoa
+          for (let t = 0; t < rk.trail.length; t++) {
+            const pt = rk.trail[t];
+            ctx.save();
+            ctx.globalAlpha = (t + 1) / rk.trail.length * 0.55;
+            ctx.fillStyle = '#ffd166';
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 2.2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+
+          if (rk.y <= rk.targetY || rk.vy >= -1.5) {
+            spawnFlowerBurst(rk.x, rk.y, cw < 640 ? 26 : 36);
+            rockets.splice(i, 1);
+          }
+        }
+
+        // Vẽ các hạt pháo hoa & hoa bung nở
         for (let i = particles.length - 1; i >= 0; i--) {
           const pt = particles[i];
           pt.x += pt.vx;
           pt.y += pt.vy;
-          pt.vy += 0.05;
+          pt.vy += 0.048;
           pt.vx *= 0.985;
-          pt.rotation += 0.04;
+          pt.rotation += 0.045;
           pt.alpha -= pt.decay;
 
           if (pt.alpha <= 0) {
@@ -1077,7 +1140,7 @@
             drawMiniFlower(ctx, pt.x, pt.y, pt.size, pt.rotation);
           } else {
             ctx.beginPath();
-            ctx.arc(pt.x, pt.y, pt.size * 0.75, 0, Math.PI * 2);
+            ctx.arc(pt.x, pt.y, pt.size * 0.78, 0, Math.PI * 2);
             ctx.fill();
           }
           ctx.restore();
@@ -1089,12 +1152,13 @@
       if (ctx) {
         resizeCanvas();
         initPetals();
+        startContinuousCelebration();
         requestAnimationFrame(animateCanvas);
         window.addEventListener('resize', resizeCanvas);
 
         window.addEventListener('pointerdown', (e) => {
           if (e.target && e.target.closest && e.target.closest('button, input, label')) return;
-          spawnFlowerBurst(e.clientX, e.clientY, 18);
+          spawnFlowerBurst(e.clientX, e.clientY, 24);
         });
       }
 
@@ -1106,8 +1170,6 @@
       const wishForm = document.getElementById('wish-form');
       const nameInput = document.getElementById('user-name-input');
       const nameReminder = document.getElementById('name-reminder');
-      const resetBtn = document.getElementById('reset-btn');
-      const celebrateBtn = document.getElementById('celebrate-btn');
 
       const wishTitleEl = document.getElementById('wish-title');
       const wishOpeningEl = document.getElementById('wish-opening');
@@ -1165,26 +1227,8 @@
         viewWish.classList.add('is-entering');
 
         launchCelebrationBouquet();
+        startContinuousCelebration();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        resetBtn.focus({ preventScroll: true });
-      });
-
-      if (celebrateBtn) {
-        celebrateBtn.addEventListener('click', () => {
-          launchCelebrationBouquet();
-        });
-      }
-
-      resetBtn.addEventListener('click', () => {
-        viewWish.hidden = true;
-        viewInput.hidden = false;
-        viewInput.classList.remove('is-entering');
-        void viewInput.offsetWidth;
-        viewInput.classList.add('is-entering');
-
-        nameInput.value = '';
-        clearErrorState();
-        nameInput.focus();
       });
 
       // Hàm tự kiểm tra chất lượng
