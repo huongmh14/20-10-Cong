@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#eaf4fb" />
+  <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Tông xanh nước biển dịu nhẹ kết hợp kem sáng & điểm nhấn màu hoa thanh nhã */
+      --bg-sea-pastel: #eaf4fb;
+      --bg-cream: #fbfcfe;
+      --bg-tint: #dceefb;
+      --surface-card: rgba(255, 255, 255, 0.92);
+      --border-soft: #cbe3f5;
+      --border-focus: #3b82c4;
+
+      --text-primary: #16324f;
+      --text-secondary: #3e5c76;
+      --text-muted: #6987a1;
+
+      --ocean-primary: #2b6cb0;
+      --ocean-hover: #215387;
+      --ocean-light: #e3f1fc;
+      --ocean-accent: #569cd6;
+      --floral-highlight: #e8f3fc;
+
+      --error-text: #b8324f;
+      --error-bg: #fdf2f4;
+      --error-border: #f3c2cc;
+
+      --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+
+      --radius-sm: 0.625rem;
+      --radius-md: 0.875rem;
+      --radius-lg: 1.375rem;
+      --shadow-soft: 0 18px 48px rgba(22, 50, 79, 0.08), 0 4px 14px rgba(43, 108, 176, 0.06);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background:
+        radial-gradient(circle at 15% 15%, var(--bg-tint) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, #d4ebfa 0%, transparent 50%),
+        linear-gradient(165deg, var(--bg-sea-pastel) 0%, var(--bg-cream) 55%, #eef6fc 100%);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Hiệu ứng một ít cánh hoa chuyển động nhẹ nhàng (bổ trợ, không gây rối) */
+    .petals-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: -10%;
+      width: 14px;
+      height: 10px;
+      border-radius: 75% 15% 75% 15%;
+      background: linear-gradient(135deg, rgba(132, 192, 244, 0.48), rgba(212, 236, 255, 0.72));
+      box-shadow: 0 2px 6px rgba(43, 108, 176, 0.08);
+      opacity: 0.65;
+      animation: petalFall linear infinite;
+    }
+
+    .petal:nth-child(1)  { left: 7%;  width: 13px; height: 9px;  animation-duration: 15s; animation-delay: 0s; }
+    .petal:nth-child(2)  { left: 19%; width: 16px; height: 11px; animation-duration: 18s; animation-delay: -4s; }
+    .petal:nth-child(3)  { left: 33%; width: 12px; height: 8px;  animation-duration: 14s; animation-delay: -8s; }
+    .petal:nth-child(4)  { left: 48%; width: 15px; height: 10px; animation-duration: 19s; animation-delay: -2s; }
+    .petal:nth-child(5)  { left: 64%; width: 13px; height: 9px;  animation-duration: 16s; animation-delay: -11s; }
+    .petal:nth-child(6)  { left: 78%; width: 16px; height: 11px; animation-duration: 17s; animation-delay: -6s; }
+    .petal:nth-child(7)  { left: 89%; width: 12px; height: 8px;  animation-duration: 15s; animation-delay: -9s; }
+    .petal:nth-child(8)  { left: 95%; width: 14px; height: 10px; animation-duration: 20s; animation-delay: -13s; }
+
+    @keyframes petalFall {
+      0% {
+        transform: translate3d(0, -5vh, 0) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.65;
+      }
+      50% {
+        transform: translate3d(24px, 50vh, 0) rotate(160deg);
+      }
+      85% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translate3d(-18px, 108vh, 0) rotate(320deg);
+        opacity: 0;
+      }
+    }
+
+    /* Bố cục chính: cuộn tự nhiên, không cố định chiều cao gây mất chữ */
+    .page-main {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding:
+        max(1.5rem, env(safe-area-inset-top))
+        max(1rem, env(safe-area-inset-right))
+        max(2rem, env(safe-area-inset-bottom))
+        max(1rem, env(safe-area-inset-left));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @media (min-width: 640px) {
+      .page-main {
+        padding: 3rem 1.75rem;
+      }
+    }
+
+    /* Thẻ nội dung trung tâm */
+    .landing-card {
+      width: 100%;
+      background: var(--surface-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1.75rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 480px) {
+      .landing-card {
+        padding: 2.25rem 2rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .landing-card {
+        padding: 2.75rem 3rem;
+      }
+    }
+
+    /* Đường viền trang trí mảnh bên trong */
+    .landing-card::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(86, 156, 214, 0.22);
+      border-radius: calc(var(--radius-lg) - 6px);
+      pointer-events: none;
+    }
+
+    /* Hoa trang trí góc nhẹ nhàng */
+    .floral-corner {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    .floral-corner--tl {
+      top: 12px;
+      left: 12px;
+    }
+
+    .floral-corner--br {
+      bottom: 12px;
+      right: 12px;
+      transform: rotate(180deg);
+    }
+
+    /* Trạng thái chuyển màn hình */
+    .view-panel {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .view-panel[hidden] {
+      display: none !important;
+    }
+
+    .view-panel.is-entering {
+      animation: gentleReveal 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes gentleReveal {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Nhãn ngày lễ 20/10 */
+    .occasion-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: var(--ocean-light);
+      color: var(--ocean-primary);
+      border: 1px solid rgba(43, 108, 176, 0.2);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .occasion-badge svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    /* Typography làm trọng tâm */
+    .hero-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .title-serif {
+      font-family: var(--font-serif);
+      font-size: clamp(1.85rem, 5.2vw, 2.75rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.22;
+      margin-bottom: 0.75rem;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .lead-text {
+      font-size: clamp(0.95rem, 2.2vw, 1.0625rem);
+      color: var(--text-secondary);
+      max-width: 50ch;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* Biểu mẫu nhập tên */
+    .name-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      text-align: left;
+    }
+
+    .form-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .char-hint {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .name-input {
+      width: 100%;
+      min-height: 50px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-sans);
+      /* 1rem (16px) giúp trình duyệt di động không tự phóng to khi chạm */
+      font-size: 1rem;
+      color: var(--text-primary);
+      background: #ffffff;
+      border: 1.5px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .name-input::placeholder {
+      color: #8da6bd;
+    }
+
+    .name-input:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 4px rgba(59, 130, 196, 0.16);
+    }
+
+    .name-input[aria-invalid="true"] {
+      border-color: var(--error-border);
+      background: var(--error-bg);
+    }
+
+    .reminder-message {
+      font-size: 0.84rem;
+      color: var(--error-text);
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.75rem;
+      line-height: 1.45;
+    }
+
+    .reminder-message[hidden] {
+      display: none !important;
+    }
+
+    /* Nút bấm dễ thao tác bằng tay trên mọi điện thoại */
+    .btn-primary,
+    .btn-secondary {
+      min-height: 50px;
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      border: none;
+      background: linear-gradient(135deg, var(--ocean-primary) 0%, #3b82c4 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(43, 108, 176, 0.24);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--ocean-hover) 0%, var(--ocean-primary) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(43, 108, 176, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary:focus-visible,
+    .btn-secondary:focus-visible {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 3px;
+    }
+
+    /* Giao diện phần lời chúc cá nhân hóa */
+    .wish-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(190, 227, 248, 0.8);
+    }
+
+    .recipient-highlight {
+      color: var(--ocean-primary);
+      font-style: italic;
+    }
+
+    .wish-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      color: var(--text-primary);
+      font-size: clamp(0.96rem, 2.2vw, 1.05rem);
+    }
+
+    .wish-opening {
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* Ba lời chúc: niềm vui, sự tự tin và những điều tốt đẹp */
+    .wish-pillars {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 0.25rem 0;
+    }
+
+    .wish-pillar {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      background: var(--floral-highlight);
+      border: 1px solid rgba(190, 227, 248, 0.9);
+      line-height: 1.65;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: itemAppear 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .wish-pillar:nth-child(1) { animation-delay: 0.08s; }
+    .wish-pillar:nth-child(2) { animation-delay: 0.18s; }
+    .wish-pillar:nth-child(3) { animation-delay: 0.28s; }
+
+    @keyframes itemAppear {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pillar-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--ocean-primary);
+      border: 1px solid var(--border-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+      font-size: 0.9rem;
+    }
+
+    .pillar-text {
+      flex: 1;
+      color: var(--text-primary);
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .pillar-label {
+      font-weight: 600;
+      color: var(--ocean-primary);
+    }
+
+    .wish-closing {
+      padding-top: 0.5rem;
+      font-family: var(--font-serif);
+      font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--ocean-primary);
+      text-align: center;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .wish-actions {
+      margin-top: 1.75rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--ocean-primary);
+      border: 1.5px solid var(--border-soft);
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .btn-secondary:hover {
+      background: var(--ocean-light);
+      border-color: var(--ocean-accent);
+      transform: translateY(-1px);
+    }
+
+    /* Chân trang tinh gọn */
+    .page-footer {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* Chế độ giảm chuyển động cho người dùng nhạy cảm với hiệu ứng */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .petal {
+        display: none;
+      }
+      .wish-pillar {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cánh hoa xanh dịu nhẹ bay chậm làm nền bổ trợ -->
+  <div class="petals-layer" aria-hidden="true">
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+    <span class="petal"></span>
+  </div>
+
+  <main class="page-main">
+    <div class="landing-card">
+      <!-- Chi tiết hoa trang trí mảnh ở góc -->
+      <svg class="floral-corner floral-corner--tl" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+        <path d="M6 66V24C6 14.059 14.059 6 24 6h42" stroke="#569cd6" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="22" cy="22" r="5" fill="#84c0f4" fill-opacity="0.35"/>
+        <circle cx="22" cy="22" r="2" fill="#2b6cb0"/>
+        <path d="M22 12c2.5 3.5 2.5 6.5 0 10-2.5-3.5-2.5-6.5 0-10Z" fill="#84c0f4" fill-opacity="0.45"/>
+        <path d="M12 22c3.5 2.5 6.5 2.5 10 0-3.5-2.5-6.5-2.5-10 0Z" fill="#84c0f4" fill-opacity="0.45"/>
+      </svg>
+      <svg class="floral-corner floral-corner--br" viewBox="0 0 72 72" fill="none" aria-hidden="true">
+        <path d="M6 66V24C6 14.059 14.059 6 24 6h42" stroke="#569cd6" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="22" cy="22" r="5" fill="#84c0f4" fill-opacity="0.35"/>
+        <circle cx="22" cy="22" r="2" fill="#2b6cb0"/>
+        <path d="M22 12c2.5 3.5 2.5 6.5 0 10-2.5-3.5-2.5-6.5 0-10Z" fill="#84c0f4" fill-opacity="0.45"/>
+        <path d="M12 22c3.5 2.5 6.5 2.5 10 0-3.5-2.5-6.5-2.5-10 0Z" fill="#84c0f4" fill-opacity="0.45"/>
+      </svg>
+
+      <!-- MÀN HÌNH 1: Nhập tên -->
+      <section id="view-input" class="view-panel" aria-labelledby="landing-title">
+        <header class="hero-header">
+          <div class="occasion-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 3c2.5 3.2 3.5 6.2 0 9-3.5-2.8-2.5-5.8 0-9Z"/>
+              <path d="M21 12c-3.2 2.5-6.2 3.5-9 0 2.8-3.5 5.8-2.5 9 0Z"/>
+              <path d="M12 21c-2.5-3.2-3.5-6.2 0-9 3.5 2.8 2.5 5.8 0 9Z"/>
+              <path d="M3 12c3.2-2.5 6.2-3.5 9 0-2.8 3.5-5.8 2.5-9 0Z"/>
+            </svg>
+            <span>Ngày Phụ Nữ Việt Nam • 20/10</span>
+          </div>
+          <h1 id="landing-title" class="title-serif">Gửi Lời Chúc 20/10 Dịu Dàng Nhất</h1>
+          <p class="lead-text">
+            Một góc nhỏ thanh bình dành tặng các chị em nhân ngày 20/10. Hãy nhập tên của bạn để mở lời chúc được gửi riêng cho hôm nay.
+          </p>
+        </header>
+
+        <form id="wish-form" class="name-form" novalidate>
+          <div class="form-group">
+            <label for="user-name-input" class="form-label">
+              <span>Tên của bạn</span>
+              <span class="char-hint" id="char-count">Tối đa 50 ký tự</span>
+            </label>
+            <input
+              type="text"
+              id="user-name-input"
+              name="userName"
+              class="name-input"
+              placeholder="Nhập tên của bạn..."
+              maxlength="50"
+              autocomplete="name"
+              aria-describedby="name-reminder char-count"
+              aria-invalid="false"
+            />
+            <p id="name-reminder" class="reminder-message" role="alert" hidden>
+              Bạn ơi, hãy nhập tên (không để trống hoặc chỉ có khoảng trắng) để nhận lời chúc nhé.
+            </p>
+          </div>
+
+          <button type="submit" id="submit-btn" class="btn-primary">
+            <span>Nhận lời chúc</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- MÀN HÌNH 2: Hiển thị lời chúc cá nhân hóa -->
+      <section id="view-wish" class="view-panel" aria-labelledby="wish-title" aria-live="polite" hidden>
+        <header class="wish-header">
+          <div class="occasion-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 3c2.5 3.2 3.5 6.2 0 9-3.5-2.8-2.5-5.8 0-9Z"/>
+              <path d="M21 12c-3.2 2.5-6.2 3.5-9 0 2.8-3.5 5.8-2.5 9 0Z"/>
+              <path d="M12 21c-2.5-3.2-3.5-6.2 0-9 3.5 2.8 2.5 5.8 0 9Z"/>
+              <path d="M3 12c3.2-2.5 6.2-3.5 9 0-2.8 3.5-5.8 2.5-9 0Z"/>
+            </svg>
+            <span>Mừng Ngày Phụ Nữ Việt Nam 20/10</span>
+          </div>
+          <h2 id="wish-title" class="title-serif"></h2>
+        </header>
+
+        <div class="wish-content">
+          <p id="wish-opening" class="wish-opening"></p>
+
+          <ul class="wish-pillars" aria-label="Ba lời chúc dành cho bạn">
+            <li class="wish-pillar">
+              <span class="pillar-icon" aria-hidden="true">✿</span>
+              <p class="pillar-text">
+                <span class="pillar-label">Trọn vẹn niềm vui:</span>
+                <span id="wish-item-joy"></span>
+              </p>
+            </li>
+            <li class="wish-pillar">
+              <span class="pillar-icon" aria-hidden="true">✦</span>
+              <p class="pillar-text">
+                <span class="pillar-label">Vững vàng tự tin:</span>
+                <span id="wish-item-confidence"></span>
+              </p>
+            </li>
+            <li class="wish-pillar">
+              <span class="pillar-icon" aria-hidden="true">❀</span>
+              <p class="pillar-text">
+                <span class="pillar-label">Đón điều tốt đẹp:</span>
+                <span id="wish-item-goodness"></span>
+              </p>
+            </li>
+          </ul>
+
+          <p id="wish-closing" class="wish-closing"></p>
+        </div>
+
+        <div class="wish-actions">
+          <button type="button" id="reset-btn" class="btn-secondary">
+            <span>Nhập tên khác</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-footer">
+      Chúc các chị em một ngày 20/10 ngập tràn niềm vui và bình yên.
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      // Mẫu nội dung lời chúc sử dụng biến {ten} ở các vị trí tự nhiên
+      const WISH_TEMPLATE = {
+        title: 'Chúc {ten} một ngày 20/10 thật rạng rỡ!',
+        opening:
+          'Nhân ngày Phụ nữ Việt Nam 20/10, gửi đến {ten} những lời chúc trong lành và ấm áp nhất. Mong rằng hôm nay cũng như mỗi ngày sắp tới, bạn luôn tìm thấy những khoảnh khắc dịu dàng cho riêng mình.',
+        joy:
+          'Chúc bạn luôn giữ được nụ cười tươi tắn, tâm hồn thư thái và tìm thấy niềm vui từ những điều giản dị, bình yên nhất quanh mình.',
+        confidence:
+          'Chúc {ten} luôn tự tin với nét đẹp, sự duyên dáng và giá trị riêng của bản thân để vững vàng tỏa sáng theo cách bạn mong muốn.',
+        goodness:
+          'Mong mọi dự định của bạn đều thuận lợi, cuộc sống luôn ngập tràn năng lượng tích cực và có thật nhiều điều tốt đẹp tìm đến.',
+        closing:
+          'Chúc {ten} một ngày 20/10 thật nhiều hoa thơm, tiếng cười và những kỷ niệm đáng nhớ!'
+      };
+
+      const MAX_NAME_LENGTH = 50;
+
+      // Xử lý tên: xóa khoảng trắng thừa ở đầu và cuối, giữ nguyên dấu & cách viết của người dùng
+      function sanitizeUserName(rawInput) {
+        if (typeof rawInput !== 'string') return '';
+        return rawInput.trim().slice(0, MAX_NAME_LENGTH);
+      }
+
+      // Ghép biến {ten} vào mẫu nội dung có sẵn
+      function buildPersonalizedWish(rawInput) {
+        const cleanName = sanitizeUserName(rawInput);
+        if (!cleanName) return null;
+
+        const replaceToken = (templateStr) => templateStr.replace(/\{ten\}/g, cleanName);
+
+        return {
+          name: cleanName,
+          title: replaceToken(WISH_TEMPLATE.title),
+          opening: replaceToken(WISH_TEMPLATE.opening),
+          joy: replaceToken(WISH_TEMPLATE.joy),
+          confidence: replaceToken(WISH_TEMPLATE.confidence),
+          goodness: replaceToken(WISH_TEMPLATE.goodness),
+          closing: replaceToken(WISH_TEMPLATE.closing)
+        };
+      }
+
+      // Phần tử giao diện
+      const viewInput = document.getElementById('view-input');
+      const viewWish = document.getElementById('view-wish');
+      const wishForm = document.getElementById('wish-form');
+      const nameInput = document.getElementById('user-name-input');
+      const nameReminder = document.getElementById('name-reminder');
+      const resetBtn = document.getElementById('reset-btn');
+
+      const wishTitleEl = document.getElementById('wish-title');
+      const wishOpeningEl = document.getElementById('wish-opening');
+      const wishJoyEl = document.getElementById('wish-item-joy');
+      const wishConfidenceEl = document.getElementById('wish-item-confidence');
+      const wishGoodnessEl = document.getElementById('wish-item-goodness');
+      const wishClosingEl = document.getElementById('wish-closing');
+
+      // Hiển thị tiêu đề có làm nổi bật tên một cách an toàn qua textContent
+      function renderSafeTitle(container, cleanName) {
+        container.textContent = '';
+        const parts = WISH_TEMPLATE.title.split('{ten}');
+        parts.forEach((part, index) => {
+          container.appendChild(document.createTextNode(part));
+          if (index < parts.length - 1) {
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'recipient-highlight';
+            nameSpan.textContent = cleanName;
+            container.appendChild(nameSpan);
+          }
+        });
+      }
+
+      function clearErrorState() {
+        nameInput.setAttribute('aria-invalid', 'false');
+        nameReminder.hidden = true;
+      }
+
+      function showErrorState() {
+        nameInput.setAttribute('aria-invalid', 'true');
+        nameReminder.hidden = false;
+      }
+
+      // Đảm bảo ô nhập không bị bàn phím điện thoại che khuất khi chạm vào
+      nameInput.addEventListener('focus', () => {
+        setTimeout(() => {
+          nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 250);
+      });
+
+      nameInput.addEventListener('input', () => {
+        if (sanitizeUserName(nameInput.value).length > 0) {
+          clearErrorState();
+        }
+      });
+
+      wishForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const personalized = buildPersonalizedWish(nameInput.value);
+
+        if (!personalized) {
+          showErrorState();
+          nameInput.focus();
+          return;
+        }
+
+        clearErrorState();
+
+        // Gán văn bản an toàn bằng textContent
+        renderSafeTitle(wishTitleEl, personalized.name);
+        wishOpeningEl.textContent = ' ' + personalized.opening.trim();
+        wishJoyEl.textContent = ' ' + personalized.joy;
+        wishConfidenceEl.textContent = ' ' + personalized.confidence;
+        wishGoodnessEl.textContent = ' ' + personalized.goodness;
+        wishClosingEl.textContent = personalized.closing;
+
+        // Chuyển sang màn hình lời chúc mượt mà
+        viewInput.hidden = true;
+        viewWish.hidden = false;
+        viewWish.classList.remove('is-entering');
+        void viewWish.offsetWidth;
+        viewWish.classList.add('is-entering');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        resetBtn.focus({ preventScroll: true });
+      });
+
+      resetBtn.addEventListener('click', () => {
+        viewWish.hidden = true;
+        viewInput.hidden = false;
+        viewInput.classList.remove('is-entering');
+        void viewInput.offsetWidth;
+        viewInput.classList.add('is-entering');
+
+        nameInput.value = '';
+        clearErrorState();
+        nameInput.focus();
+      });
+
+      // Hàm tự kiểm tra (self-check) phục vụ kiểm thử chất lượng
+      window.__verify2010Page = function verify2010Page() {
+        if (sanitizeUserName('   ') !== '') {
+          throw new Error('Phải từ chối chuỗi chỉ gồm khoảng trắng.');
+        }
+        if (sanitizeUserName('  Nguyễn Ngọc Ánh  ') !== 'Nguyễn Ngọc Ánh') {
+          throw new Error('Phải xóa khoảng trắng đầu/cuối và giữ nguyên dấu, chữ hoa/thường.');
+        }
+        if (sanitizeUserName('  minh thư  ') !== 'minh thư') {
+          throw new Error('Phải giữ nguyên cách viết tên của người dùng.');
+        }
+        const longName = 'A'.repeat(65);
+        if (sanitizeUserName(longName).length !== 50) {
+          throw new Error('Phải giới hạn tối đa 50 ký tự.');
+        }
+        const sample = buildPersonalizedWish('Lan Anh');
+        if (sample.title !== 'Chúc Lan Anh một ngày 20/10 thật rạng rỡ!') {
+          throw new Error('Tiêu đề chưa khớp mẫu {ten}.');
+        }
+        return true;
+      };
+    })();
+  </script>
+</body>
+</html>
